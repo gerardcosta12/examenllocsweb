@@ -1,20 +1,14 @@
 const POKEAPI_URL = 'https://pokeapi.co/api/v2/pokemon/';
 const MAX_TEAM_SIZE = 6;
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadPokemon();
-    setupSearchForm();
-});
-
 window.onload = () => {
-  const timeCounterElement = document.getElementById('time-counter');
-  setInterval(() => {
-    timeCounterElement.innerText = +timeCounterElement.innerText + 1;
-  }, 1000);
+  loadPokemon();
+  timeCounter();
 }
 
 let userTeam = [];
 
+// En primer lloc, carreguem els 151 Pokemon de la regió de Kanto
 async function loadPokemon() {
     const response = await fetch(`${POKEAPI_URL}?limit=151`);
     const data = await response.json();
@@ -30,6 +24,7 @@ async function loadPokemon() {
     });
 }
 
+// Funció per mostrar els detalls d'un Pokémon un cop s'ha clicat el botó "Veure Detalls"
 async function showPokemonDetails(pokemonName) {
   const response = await fetch(`${POKEAPI_URL}${pokemonName}`);
   if (!response.ok) {
@@ -44,25 +39,25 @@ function displayPokemonInfo(pokemon) {
   const pokemonInfoSection = document.getElementById('pokemon-info');
   pokemonInfoSection.innerHTML = `
       <h2>${pokemon.name.toUpperCase()} (#${pokemon.id})</h2>
-      <img src="${pokemon.sprites.other['official-artwork'].front_default}" alt="${pokemon.name}">
+      <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
       <p>Id: ${pokemon.id}</p>
       <p>Tipus: ${pokemon.types.map(type => type.type.name).join(', ')}</p>
   `;
 }
 
+// Funció per afegir un Pokémon a l'equip de l'usuari un cop s'ha clicat el botó "Afegir a l'equip"
 async function addToTeam(pokemonName) {
   if (userTeam.length >= MAX_TEAM_SIZE) {
       alert("El teu equip ja està complet! (6 Pokémon)");
       return;
   }
-
   const response = await fetch(`${POKEAPI_URL}${pokemonName}`);
   const pokemon = await response.json();
 
   userTeam.push({
       id: pokemon.id,
       name: pokemon.name,
-      image: pokemon.sprites.other['official-artwork'].front_default,
+      image: pokemon.sprites.front_default,
       types: pokemon.types.map(type => type.type.name).join(', ')
   });
 
@@ -84,4 +79,12 @@ function updateUserTeam() {
       `;
       teamContainer.appendChild(teamCard);
   });
+}
+
+// Funció per comptar el temps que l'usuari ha estat a la pàgina (es mostra a la part inferior de la pàgina)
+function timeCounter() {
+  const timeCounterElement = document.getElementById('time-counter');
+  setInterval(() => {
+      timeCounterElement.innerText = +timeCounterElement.innerText + 1;
+  }, 1000);
 }
