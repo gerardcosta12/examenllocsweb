@@ -24,6 +24,18 @@ async function loadPokemon() {
     });
 }
 
+// Funció per cercar un Pokémon per nom
+async function searchPokemon() {
+  const botoCercar = document.getElementById('pokemon-search').value;
+  const response = await fetch(`${POKEAPI_URL}${botoCercar}`);
+  if (!response.ok) {
+      alert('Aquest Pokémon no existeix!');
+      return;
+  }
+  const pokemon = await response.json();
+  displayPokemonInfo(pokemon);
+}
+
 // Funció per mostrar els detalls d'un Pokémon un cop s'ha clicat el botó "Veure Detalls"
 async function showPokemonDetails(pokemonName) {
   const response = await fetch(`${POKEAPI_URL}${pokemonName}`);
