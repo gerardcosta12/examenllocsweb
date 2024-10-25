@@ -57,6 +57,7 @@ function displayPokemonInfo(pokemon) {
       <p>Alçada: ${pokemon.height}</p>
       <p>Pes: ${pokemon.weight}</p>
       <p>Experiència Base: ${pokemon.base_experience}</p>
+      <p><button onclick="addToTeam('${pokemon.name}')">Afegir a l'equip</button></p>
   `;
 }
 
@@ -98,7 +99,7 @@ function updateUserTeam() {
 }
 
 // Funció per eliminar un Pokémon de l'equip de l'usuari un cop s'ha clicat el botó "Eliminar de l'equip"
-function removeFromTeam(pokemonId) {
+async function removeFromTeam(pokemonId) {
   userTeam = userTeam.filter(pokemon => pokemon.id !== pokemonId);
   updateUserTeam();
 }
