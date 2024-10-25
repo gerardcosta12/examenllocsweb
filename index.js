@@ -30,3 +30,58 @@ async function loadPokemon() {
     });
 }
 
+async function showPokemonDetails(pokemonName) {
+  const response = await fetch(`${POKEAPI_URL}${pokemonName}`);
+  if (!response.ok) {
+      alert('Error!');
+      return;
+  }
+  const pokemon = await response.json();
+  displayPokemonInfo(pokemon);
+}
+
+function displayPokemonInfo(pokemon) {
+  const pokemonInfoSection = document.getElementById('pokemon-info');
+  pokemonInfoSection.innerHTML = `
+      <h2>${pokemon.name.toUpperCase()} (#${pokemon.id})</h2>
+      <img src="${pokemon.sprites.other['official-artwork'].front_default}" alt="${pokemon.name}">
+      <p>Id: ${pokemon.id}</p>
+      <p>Tipus: ${pokemon.types.map(type => type.type.name).join(', ')}</p>
+  `;
+}
+
+async function addToTeam(pokemonName) {
+  if (userTeam.length >= MAX_TEAM_SIZE) {
+      alert("El teu equip ja està complet! (6 Pokémon)");
+      return;
+  }
+
+  const response = await fetch(`${POKEAPI_URL}${pokemonName}`);
+  const pokemon = await response.json();
+
+  userTeam.push({
+      id: pokemon.id,
+      name: pokemon.name,
+      image: pokemon.sprites.other['official-artwork'].front_default,
+      types: pokemon.types.map(type => type.type.name).join(', ')
+  });
+
+  updateUserTeam();
+}
+
+function updateUserTeam() {
+  const teamContainer = document.getElementById('team-container');
+  teamContainer.innerHTML = '';
+
+  userTeam.forEach(pokemon => {
+      const teamCard = document.createElement('div');
+      teamCard.classList.add('team-card');
+      teamCard.innerHTML = `
+          <h3>${pokemon.name.toUpperCase()}</h3>
+          <img src="${pokemon.image}" alt="${pokemon.name}">
+          <p>ID: ${pokemon.id}</p>
+          <p>Tipus: ${pokemon.types}</p>
+      `;
+      teamContainer.appendChild(teamCard);
+  });
+}
