@@ -20,6 +20,10 @@ footer{
   text-align: center;
 }
 
+h2{
+  margin-top: 50px;
+}
+
 button{
   cursor: pointer;
 }
@@ -27,4 +31,22 @@ button{
 button:hover{
   background-color: brown;
   color: white;
+}
+
+@media (max-width: 680px) {
+  body{
+    background-color:aquamarine;
+  }
+  header img {
+    width: 200px;
+  }
+}
+
+@media (min-width: 680px) and (max-width:1200px){
+  body{
+    background-color:lightblue;
+  }
+  header img {
+    width: 250px;
+  }
 }

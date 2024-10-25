@@ -38,7 +38,7 @@ async function showPokemonDetails(pokemonName) {
 function displayPokemonInfo(pokemon) {
   const pokemonInfoSection = document.getElementById('pokemon-info');
   pokemonInfoSection.innerHTML = `
-      <h2>${pokemon.name} (#${pokemon.id})</h2>
+      <h3>${pokemon.name} (#${pokemon.id})</h3>
       <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
       <p>ID: ${pokemon.id}</p>
       <p>Tipus: ${pokemon.types.map(type => type.type.name).join(', ')}</p>
@@ -79,12 +79,16 @@ function updateUserTeam() {
           <img src="${pokemon.image}" alt="${pokemon.name}">
           <p>ID: ${pokemon.id}</p>
           <p>Tipus: ${pokemon.types}</p>
-          <p>Alçada: ${pokemon.height}</p>
-          <p>Pes: ${pokemon.weight}</p>
-          <p>Experiència Base: ${pokemon.base_experience}</p>
+          <p><button onclick="removeFromTeam(${pokemon.id})">Eliminar de l'equip</button></p>
       `;
       teamContainer.appendChild(teamCard);
   });
+}
+
+// Funció per eliminar un Pokémon de l'equip de l'usuari un cop s'ha clicat el botó "Eliminar de l'equip"
+function removeFromTeam(pokemonId) {
+  userTeam = userTeam.filter(pokemon => pokemon.id !== pokemonId);
+  updateUserTeam();
 }
 
 // Funció per comptar el temps que l'usuari ha estat a la pàgina (es mostra a la part inferior de la pàgina)
