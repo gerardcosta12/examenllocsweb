@@ -17,7 +17,7 @@ async function loadPokemon() {
     data.results.forEach(pokemon => {
         const pokemonCard = document.createElement('div');
         pokemonCard.classList.add('pokemon-card');
-        pokemonCard.innerHTML = `<p>${pokemon.name.toUpperCase()}</p>
+        pokemonCard.innerHTML = `<p>${pokemon.name}</p>
                                  <button onclick="showPokemonDetails('${pokemon.name}')">Veure Detalls</button>
                                  <button onclick="addToTeam('${pokemon.name}')">Afegir a l'equip</button>`;
         pokemonList.appendChild(pokemonCard);
@@ -38,10 +38,13 @@ async function showPokemonDetails(pokemonName) {
 function displayPokemonInfo(pokemon) {
   const pokemonInfoSection = document.getElementById('pokemon-info');
   pokemonInfoSection.innerHTML = `
-      <h2>${pokemon.name.toUpperCase()} (#${pokemon.id})</h2>
+      <h2>${pokemon.name} (#${pokemon.id})</h2>
       <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
-      <p>Id: ${pokemon.id}</p>
+      <p>ID: ${pokemon.id}</p>
       <p>Tipus: ${pokemon.types.map(type => type.type.name).join(', ')}</p>
+      <p>Alçada: ${pokemon.height}</p>
+      <p>Pes: ${pokemon.weight}</p>
+      <p>Experiència Base: ${pokemon.base_experience}</p>
   `;
 }
 
@@ -72,7 +75,7 @@ function updateUserTeam() {
       const teamCard = document.createElement('div');
       teamCard.classList.add('team-card');
       teamCard.innerHTML = `
-          <h3>${pokemon.name.toUpperCase()}</h3>
+          <h3>${pokemon.name}</h3>
           <img src="${pokemon.image}" alt="${pokemon.name}">
           <p>ID: ${pokemon.id}</p>
           <p>Tipus: ${pokemon.types}</p>
