@@ -79,6 +79,9 @@ function updateUserTeam() {
           <img src="${pokemon.image}" alt="${pokemon.name}">
           <p>ID: ${pokemon.id}</p>
           <p>Tipus: ${pokemon.types}</p>
+          <p>Alçada: ${pokemon.height}</p>
+          <p>Pes: ${pokemon.weight}</p>
+          <p>Experiència Base: ${pokemon.base_experience}</p>
       `;
       teamContainer.appendChild(teamCard);
   });
